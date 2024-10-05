@@ -1,0 +1,138 @@
+moveId,title,rating,genre,views
+1,Toy Story (1995),3.921,Adventure,215
+6,Heat (1995),3.946,Comedy,102
+50,"Usual Suspects, The (1995)",4.238,Comedy,204
+223,Clerks (1994),3.856,Adventure,104
+296,Pulp Fiction (1994),4.197,Drama,307
+356,Forrest Gump (1994),4.164,Comedy,329
+367,"Mask, The (1994)",3.185,Action,157
+480,Jurassic Park (1993),3.75,Children,238
+527,Schindler's List (1993),4.225,Adventure,220
+590,Dances with Wolves (1990),3.835,Children,164
+593,"Silence of the Lambs, The (1991)",4.161,Children,279
+608,Fargo (1996),4.116,Drama,181
+733,"Rock, The (1996)",3.64,Action,121
+780,Independence Day (a.k.a. ID4) (1996),3.446,Drama,202
+1073,Willy Wonka & the Chocolate Factory (1971),3.874,Comedy,119
+1089,Reservoir Dogs (1992),4.202,Action,131
+1196,Star Wars: Episode V - The Empire Strikes Back (1980),4.216,Action,211
+1198,Raiders of the Lost Ark (Indiana Jones and the Raiders of the Lost Ark) (1981),4.207,Action,200
+1208,Apocalypse Now (1979),4.22,Children,107
+1213,Goodfellas (1990),4.25,Comedy,126
+1222,Full Metal Jacket (1987),4.098,Children,102
+1265,Groundhog Day (1993),3.944,Action,143
+1517,Austin Powers: International Man of Mystery (1997),3.535,Crime,100
+1732,"Big Lebowski, The (1998)",3.925,Comedy,106
+2115,Indiana Jones and the Temple of Doom (1984),3.639,Drama,108
+2571,"Matrix, The (1999)",4.192,Horror,278
+2716,Ghostbusters (a.k.a. Ghost Busters) (1984),3.775,Adventure,120
+2858,American Beauty (1999),4.056,Comedy,204
+2959,Fight Club (1999),4.273,Drama,218
+3793,X-Men (2000),3.699,Drama,133
+318,"Shawshank Redemption, The (1994)",4.429,Drama,317
+3578,Gladiator (2000),3.938,Drama,170
+58559,"Dark Knight, The (2008)",4.238,Comedy,149
+79132,Inception (2010),4.066,Action,143
+32,Twelve Monkeys (a.k.a. 12 Monkeys) (1995),3.983,Children,177
+47,Seven (a.k.a. Se7en) (1995),3.975,Comedy,203
+357,Four Weddings and a Funeral (1994),3.519,Adventure,103
+457,"Fugitive, The (1993)",3.992,Thriller,190
+539,Sleepless in Seattle (1993),3.472,Action,106
+588,Aladdin (1992),3.792,Drama,183
+912,Casablanca (1942),4.24,Crime,100
+1136,Monty Python and the Holy Grail (1975),4.162,Drama,136
+1291,Indiana Jones and the Last Crusade (1989),4.046,Drama,140
+1923,There's Something About Mary (1998),3.676,Action,105
+2683,Austin Powers: The Spy Who Shagged Me (1999),3.198,Action,121
+2762,"Sixth Sense, The (1999)",3.894,Comedy,179
+3996,"Crouching Tiger, Hidden Dragon (Wo hu cang long) (2000)",3.836,Documentary,110
+4896,Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001),3.762,Animation,107
+34,Babe (1995),3.652,Drama,128
+39,Clueless (1995),3.293,Comedy,104
+110,Braveheart (1995),4.032,Action,237
+344,Ace Ventura: Pet Detective (1994),3.04,Comedy,161
+364,"Lion King, The (1994)",3.942,Comedy,172
+592,Batman (1989),3.429,Comedy,189
+10,GoldenEye (1995),3.496,Action,132
+153,Batman Forever (1995),2.916,Comedy,137
+165,Die Hard: With a Vengeance (1995),3.556,Action,144
+185,"Net, The (1995)",3.04,Adventure,112
+208,Waterworld (1995),2.913,Crime,115
+231,Dumb & Dumber (Dumb and Dumber) (1994),3.06,Drama,133
+253,Interview with the Vampire: The Vampire Chronicles (1994),3.459,Sci-Fi,109
+292,Outbreak (1995),3.426,Action,101
+316,Stargate (1994),3.375,Adventure,140
+349,Clear and Present Danger (1994),3.605,Comedy,110
+434,Cliffhanger (1993),3.035,Comedy,101
+454,"Firm, The (1993)",3.535,Action,101
+500,Mrs. Doubtfire (1993),3.389,Children,144
+589,Terminator 2: Judgment Day (1991),3.971,Thriller,224
+597,Pretty Woman (1990),3.485,Comedy,135
+587,Ghost (1990),3.435,Crime,115
+924,2001: A Space Odyssey (1968),3.894,Documentary,109
+1240,"Terminator, The (1984)",3.897,Action,131
+1682,"Truman Show, The (1998)",3.812,Action,125
+4306,Shrek (2001),3.868,Comedy,170
+4963,Ocean's Eleven (2001),3.845,Adventure,119
+4995,"Beautiful Mind, A (2001)",4.0,Crime,123
+5349,Spider-Man (2002),3.541,Action,122
+5445,Minority Report (2002),3.638,Comedy,120
+5952,"Lord of the Rings: The Two Towers, The (2002)",4.021,Action,188
+6539,Pirates of the Caribbean: The Curse of the Black Pearl (2003),3.779,Comedy,149
+7153,"Lord of the Rings: The Return of the King, The (2003)",4.119,Drama,185
+8961,"Incredibles, The (2004)",3.836,Drama,125
+2,Jumanji (1995),3.432,Drama,110
+150,Apollo 13 (1995),3.846,Horror,201
+377,Speed (1994),3.529,Action,171
+1270,Back to the Future (1985),4.038,Comedy,171
+33794,Batman Begins (2005),3.862,Comedy,116
+68954,Up (2009),4.005,Crime,105
+380,True Lies (1994),3.497,Drama,178
+1210,Star Wars: Episode VI - Return of the Jedi (1983),4.138,Drama,196
+1721,Titanic (1997),3.414,Action,140
+2028,Saving Private Ryan (1998),4.146,Comedy,188
+260,Star Wars: Episode IV - A New Hope (1977),4.231,Comedy,251
+1214,Alien (1979),3.969,Horror,146
+4022,Cast Away (2000),3.7,Children,100
+4993,"Lord of the Rings: The Fellowship of the Ring, The (2001)",4.106,Crime,198
+6874,Kill Bill: Vol. 1 (2003),3.962,Children,131
+541,Blade Runner (1982),4.101,Horror,124
+858,"Godfather, The (1972)",4.289,Action,192
+1197,"Princess Bride, The (1987)",4.232,Adventure,142
+1704,Good Will Hunting (1997),4.078,Action,141
+4973,"Amelie (Fabuleux destin d'Amélie Poulain, Le) (2001)",4.183,Drama,120
+7361,Eternal Sunshine of the Spotless Mind (2004),4.16,Thriller,131
+60069,WALL·E (2008),4.058,Horror,104
+1206,"Clockwork Orange, A (1971)",3.996,Comedy,120
+1258,"Shining, The (1980)",4.083,Comedy,109
+111,Taxi Driver (1976),4.106,Comedy,104
+595,Beauty and the Beast (1991),3.771,Crime,146
+1193,One Flew Over the Cuckoo's Nest (1975),4.203,Horror,133
+1527,"Fifth Element, The (1997)",3.746,Drama,116
+2706,American Pie (1999),3.379,Action,103
+4886,"Monsters, Inc. (2001)",3.871,Comedy,132
+5418,"Bourne Identity, The (2002)",3.817,Horror,112
+5816,Harry Potter and the Chamber of Secrets (2002),3.598,Horror,102
+5989,Catch Me If You Can (2002),3.922,Comedy,115
+7438,Kill Bill: Vol. 2 (2004),3.868,Action,110
+329,Star Trek: Generations (1994),3.394,Drama,108
+1580,Men in Black (a.k.a. MIB) (1997),3.488,Drama,165
+2628,Star Wars: Episode I - The Phantom Menace (1999),3.107,Drama,140
+293,Léon: The Professional (a.k.a. The Professional) (Léon) (1994),4.019,Adventure,133
+44191,V for Vendetta (2006),3.885,Comedy,100
+4878,Donnie Darko (2001),3.982,Children,109
+1200,Aliens (1986),3.964,Drama,126
+1221,"Godfather: Part II, The (1974)",4.26,Adventure,129
+4226,Memento (2000),4.123,Action,159
+736,Twister (1996),3.321,Comedy,123
+2329,American History X (1998),4.217,Comedy,129
+1036,Die Hard (1988),3.862,Action,145
+648,Mission: Impossible (1996),3.537,Drama,162
+161,Crimson Tide (1995),3.636,Action,103
+778,Trainspotting (1996),4.039,Crime,102
+586,Home Alone (1990),2.991,Crime,115
+6377,Finding Nemo (2003),3.961,Crime,141
+1097,E.T. the Extra-Terrestrial (1982),3.766,Crime,122
+48516,"Departed, The (2006)",4.252,Horror,107
+2918,Ferris Bueller's Day Off (1986),3.839,Comedy,109
+1968,"Breakfast Club, The (1985)",3.779,Animation,113
