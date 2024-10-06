@@ -134,6 +134,7 @@ def algoritmoRecomendacionRating(genero, li_clas):
 def matrizUserPelicula(lista_rating, ratings_clasificados):
     userFilm = []
     userFilm.append([film['title'] for film in ratings_clasificados])
+    film_num = len(userFilm[0])
     # ratings_promedio = [film['rating'] for film in ratings_clasificados]
     userFilm[0].insert(0, 'X')
     # print(userFilm)
@@ -144,15 +145,32 @@ def matrizUserPelicula(lista_rating, ratings_clasificados):
                              for film in lista_rating if film["userId"] == user]
         ratings_usuario = [film['rating']
                            for film in lista_rating if film["userId"] == user]
-        # print(peliculas_usuario)
-        for film in userFilm[0]:
+        for film in userFilm[0][1:]:
             if film in peliculas_usuario:
                 indice = peliculas_usuario.index(film)
                 lista.append(ratings_usuario[indice])
             else:
                 lista.append(-1)
+
+        if ((-1)*film_num) == sum(lista[1:]):
+            continue
         userFilm.append(lista)
     return userFilm
+
+
+def promedios(matriz):
+    for fila in matriz:
+        if fila[0] == 'X':
+            continue
+        user = fila.pop(0)
+        lista_pro = [x for x in fila if x != -1]
+        promedio = round(sum(lista_pro)/len(lista_pro), 0)
+        for r in fila:
+            if r == -1:
+                fila[fila.index(r)] = promedio
+        fila.insert(0, user)
+
+    return matriz
 
 
 # CREANDO CSV
@@ -164,7 +182,7 @@ def matriz_a_csv(userFilm):
         escritor_csv.writerows(userFilm)
 
 
-matriz_a_csv(matrizUserPelicula(ratings, ratings_clasificados))
+# matriz_a_csv(matrizUserPelicula(ratings, ratings_clasificados))
 
 
 def leer_matriz_csv():
@@ -177,7 +195,10 @@ def leer_matriz_csv():
     return userFilm
 
 
-# userFilm = leer_matriz_csv()
-#
-# for fila in userFilm:
-#    print(fila)
+userFilm = leer_matriz_csv()
+
+userFilm_prom = promedios(userFilm)
+
+
+def similitud(userFilm_prom):
+    pass
