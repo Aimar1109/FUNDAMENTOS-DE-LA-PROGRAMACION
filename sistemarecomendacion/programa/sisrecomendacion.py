@@ -1,6 +1,7 @@
 import utilities
 import csv
 
+# IMPORT RATINGS_SIMPLICADO TO THE PROGRAM
 ratings = []
 with open('ratings_simplificado.csv', encoding='utf-8') as file:
     csv_reader = csv.reader(file, delimiter=';')
@@ -17,8 +18,9 @@ with open('ratings_simplificado.csv', encoding='utf-8') as file:
         else:
             filaZero = fila
             primera = False
-        
 
+
+# FUNCIONES DE EJERCICIOS
 def consultaEspecifica(valoracionId, lista_ratings):
     return lista_ratings[valoracionId]
 
@@ -46,7 +48,7 @@ def consultaUser(userId, lista_ratings):
     return user_ratings
 
 
-def consultaGenero(genero:str, lista_ratings):
+def consultaGenero(genero: str, lista_ratings):
     valoracionGenero = []
     genero = genero.capitalize()
     for valoracion in lista_ratings:
@@ -54,6 +56,8 @@ def consultaGenero(genero:str, lista_ratings):
             valoracionGenero.append(valoracion)
     return valoracionGenero
 
+
+# CLASIFICACION DE LOS RATINGS (min 100v views)
 def clasificacionRating(lista_ratings):
     peliculas_clasificacadas = []
     for pelicula in lista_ratings:
@@ -81,25 +85,24 @@ def clasificacionRating(lista_ratings):
     return peliculas_clasificacadas
 
 
+# CREAR CSV PARA LA CLASIFICACION DE FILMS
 def lista_a_csv(lista_clasificada):
-    with open('peliculas_clasificadas', mode='w', newline='')as file:
+    with open('peliculas_clasificadas.csv', mode='w', newline='')as file:
         encabezados = lista_clasificada[0].keys()
 
         escritor_csv = csv.DictWriter(file, fieldnames=encabezados)
-    
+
         escritor_csv.writeheader()
 
         escritor_csv.writerows(lista_clasificada)
 
 
-def recomendacionGeneroRating(genero, ratings):
-    lista_genero = consultaGenero(genero, ratings)
+# lista_a_csv(clasificacionRating(ratings))
 
-#lista_a_csv(clasificacionRating(ratings))
 
 ### RATINGS CLASIFICADOS ###
 ratings_clasificados = []
-with open('peliculas_clasificadas') as file:
+with open('peliculas_clasificadas.csv') as file:
     csv_reader = csv.reader(file, delimiter=',')
     primera = True
     for fila in csv_reader:
@@ -115,60 +118,87 @@ with open('peliculas_clasificadas') as file:
             primera = False
 
 
-
+# ALGORITMO SIMPLE
 def algoritmoRecomendacionRating(genero, li_clas):
     li_genre = []
     for peli in li_clas:
         if genero == peli['genre']:
             li_genre.append(peli)
     return sorted(li_genre, key=lambda x: x["rating"], reverse=True)[:5]
-    
-
-#print(algoritmoRecomendacionRating('Drama', ratings_clasificados))
 
 
+# print(algoritmoRecomendacionRating('Drama', ratings_clasificados))
+
+
+# MATRIZ DE FILMS USERS
 def matrizUserPelicula(lista_rating, ratings_clasificados):
     userFilm = []
     userFilm.append([film['title'] for film in ratings_clasificados])
-    ratings_promedio = [film['rating'] for film in ratings_clasificados]
+    film_num = len(userFilm[0])
+    # ratings_promedio = [film['rating'] for film in ratings_clasificados]
     userFilm[0].insert(0, 'X')
-    #print(userFilm)
+    # print(userFilm)
 
     for user in range(1, lista_rating[-1]['userId']+1):
         lista = [f'user-{user}']
-        peliculas_usuario = [film['title'] for film in lista_rating if film["userId"] == user]
-        ratings_usuario = [film['rating'] for film in lista_rating if film["userId"] == user]
-        #print(peliculas_usuario)
-        for film in userFilm[0]:
+        peliculas_usuario = [film['title']
+                             for film in lista_rating if film["userId"] == user]
+        ratings_usuario = [film['rating']
+                           for film in lista_rating if film["userId"] == user]
+        for film in userFilm[0][1:]:
             if film in peliculas_usuario:
                 indice = peliculas_usuario.index(film)
                 lista.append(ratings_usuario[indice])
             else:
-                lista.append(ratings_promedio[userFilm.index(film)])
+                lista.append(-1)
+
+        if ((-1)*film_num) == sum(lista[1:]):
+            continue
         userFilm.append(lista)
     return userFilm
 
 
+def promedios(matriz):
+    for fila in matriz:
+        if fila[0] == 'X':
+            continue
+        user = fila.pop(0)
+        lista_pro = [x for x in fila if x != -1]
+        promedio = round(sum(lista_pro)/len(lista_pro), 0)
+        for r in fila:
+            if r == -1:
+                fila[fila.index(r)] = promedio
+        fila.insert(0, user)
+
+    return matriz
+
+
+# CREANDO CSV
 def matriz_a_csv(userFilm):
-    with open('matriz_peliculas', mode='w', newline='')as file:
+    with open('matriz_peliculas.csv', mode='w', newline='')as file:
         escritor_csv = csv.writer(file)
 
     # Escribir todas las filas
         escritor_csv.writerows(userFilm)
 
-matriz_a_csv(matrizUserPelicula(ratings, ratings_clasificados))
+
+# matriz_a_csv(matrizUserPelicula(ratings, ratings_clasificados))
 
 
 def leer_matriz_csv():
     userFilm = []
-    with open('matriz_peliculas')as file:
+    with open('matriz_peliculas.csv')as file:
         csv_reader = csv.reader(file, delimiter=',')
 
         for fila in csv_reader:
             userFilm.append(fila)
     return userFilm
 
+
 userFilm = leer_matriz_csv()
 
-for fila in userFilm:
-    print(fila)
+userFilm_prom = promedios(userFilm)
+
+
+def similitud(userFilm_prom):
+    pass
