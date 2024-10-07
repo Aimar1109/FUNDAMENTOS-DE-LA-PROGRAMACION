@@ -79,54 +79,56 @@
 # 
 # print(ultima_palabra)
 
-print("""
-¿Cual es la capital de España?
-1) Madrid
-2) Paris
-3) Helsinki
-""")
-while True:
-    respuesta: int = int(input('Respuesta: '))
-    if respuesta == 1:
-        print('Correcto')
-        break
-    elif 4 < respuesta < 0:
-        print('Out of range')
-    else:
-        print('Te has equivocado')
-        break
+#print("""
+#¿Cual es la capital de España?
+#1) Madrid
+#2) Paris
+#3) Helsinki
+#""")
+#while True:
+#    respuesta: int = int(input('Respuesta: '))
+#    if respuesta == 1:
+#        print('Correcto')
+#        break
+#    elif 4 < respuesta < 0:
+#        print('Out of range')
+#    else:
+#        print('Te has equivocado')
+#        break
+#
+#print("""
+#¿Quien tiene mas balones de oro?
+#1) Cristiano
+#2) Messi
+#3) Modric
+#""")
+#
+#while True:
+#    respuesta2: int = int(input('Respuesta: '))
+#    if respuesta == 2:
+#        print('Correcto')
+#        break
+#    elif 4 < respuesta < 0:
+#        print('Out of range')
+#    else:
+#        print('Te has equivocado')
+#        break
+#
+#
+#banco_preg = [['Preg1']]
+#
+#
+#nota: int  = int(input('Cual es tu calificacion'))
+#
+#if nota < 5:
+#    print('Tu calificaion es un SUSPENSO')
+#elif nota < 6:
+#    print('Tu calificaion es un SUFICIENTE')
+#elif nota < 7:
+#    print('Tu calificaion es un BIEN')
+#elif nota < 9:
+#    print('Tu calificaion es un NOTABLE')
+#else:
+#    print('Tu calificaion es EXECELENTE')
 
-print("""
-¿Quien tiene mas balones de oro?
-1) Cristiano
-2) Messi
-3) Modric
-""")
 
-while True:
-    respuesta2: int = int(input('Respuesta: '))
-    if respuesta == 2:
-        print('Correcto')
-        break
-    elif 4 < respuesta < 0:
-        print('Out of range')
-    else:
-        print('Te has equivocado')
-        break
-
-
-banco_preg = [['Preg1']]
-
-
-nota: int  = int(input('Cual es tu calificacion'))
-
-if nota < 5:
-    print('Tu calificaion es un SUSPENSO')
-elif nota < 6:
-    print('Tu calificaion es un SUFICIENTE')
-elif nota < 7:
-    print('Tu calificaion es un BIEN')
-elif nota < 9:
-    print('Tu calificaion es un NOTABLE')
-else:
-    print('Tu calificaion es EXECELENTE')
