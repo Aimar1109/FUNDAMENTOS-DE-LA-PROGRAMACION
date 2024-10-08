@@ -1,17 +1,11 @@
-hola = [{'userId': 1, 'num': 23},
-        {'userId': 1, 'num': 24},
-        {'userId': 1, 'num': 24},
-        {'userId': 1, 'num': 24},
-        {'userId': 2, 'num': 24},
-        {'userId': 2, 'num': 24},
-        {'userId': 2, 'num': 24},
-        {'userId': 2, 'num': 24},
-        {'userId': 3, 'num': 23},
-        {'userId': 4, 'num': 24},
-        {'userId': 4, 'num': 24},
-        ]
+import numpy as np
 
+lista = [1, 2, 3, 4]
+list1 = [1, 2, 3, 4]
 
-x = [hola[0]['num']]
+lista = np.array(lista)
+list1 = np.array(list1)
 
-x.append()
+product_escal = np.dot(lista, list1)
+
+print(product_escal)

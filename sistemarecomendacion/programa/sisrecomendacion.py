@@ -1,5 +1,5 @@
-import utilities
-import csv
+import utilities, csv
+import numpy as np
 
 # IMPORT RATINGS_SIMPLICADO TO THE PROGRAM
 ratings = []
@@ -164,7 +164,7 @@ def promedios(matriz):
             continue
         user = fila.pop(0)
         lista_pro = [x for x in fila if x != -1]
-        promedio = round(sum(lista_pro)/len(lista_pro), 0)
+        promedio = round((sum(lista_pro)/len(lista_pro)), 0)
         for r in fila:
             if r == -1:
                 fila[fila.index(r)] = promedio
@@ -174,15 +174,15 @@ def promedios(matriz):
 
 
 # CREANDO CSV
-def matriz_a_csv(userFilm):
-    with open('matriz_peliculas.csv', mode='w', newline='')as file:
+def matriz_a_csv(userFilm, fichero):
+    with open(f'{fichero}.csv', mode='w', newline='')as file:
         escritor_csv = csv.writer(file)
 
     # Escribir todas las filas
         escritor_csv.writerows(userFilm)
 
 
-# matriz_a_csv(matrizUserPelicula(ratings, ratings_clasificados))
+# matriz_a_csv((matrizUserPelicula(ratings, ratings_clasificados)), 'matriz_peliculas')
 
 
 def leer_matriz_csv():
@@ -191,14 +191,46 @@ def leer_matriz_csv():
         csv_reader = csv.reader(file, delimiter=',')
 
         for fila in csv_reader:
+            for x in fila:
+                try:      
+                    fila[fila.index(x)] = float(x)
+                except:
+                    pass
             userFilm.append(fila)
     return userFilm
 
 
 userFilm = leer_matriz_csv()
-
 userFilm_prom = promedios(userFilm)
 
 
 def similitud(userFilm_prom):
-    pass
+    matriz = [x[1:] for x in userFilm_prom[1:]]
+    similitud = []
+    for user_y in matriz:
+        lista = []
+        indice = matriz.index(user_y)
+        for user_x in matriz:
+            if indice == matriz.index(user_x):
+                lista.append(1.0)
+            else:
+                user_y = np.array(user_y)
+                user_x = np.array(user_x)
+                producto_escalar = np.dot(user_y, user_x)
+                modulos = np.linalg.norm(user_y) * np.linalg.norm(user_x)
+                lista.append(float(producto_escalar/modulos))
+        similitud.append(lista)
+    return similitud
+
+
+#matriz_a_csv(similitud(userFilm_prom), 'similitud')
+
+matriz_similitud = similitud(userFilm_prom)
+
+def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
+    usuario_mas_parecido = matriz_similitud[idUsuario].index(max([x for x in matriz_similitud[idUsuario] if x != 1.0]))
+    usuario = userFilm[idUsuario+1]
+    usuario_mas_parecido = userFilm[usuario_mas_parecido+1]
+
+
+sistemaderecomendacion(0, matriz_similitud, userFilm)

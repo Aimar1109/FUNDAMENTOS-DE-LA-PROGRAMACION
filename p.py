@@ -130,3 +130,9 @@ elif nota < 9:
     print('Tu calificaion es un NOTABLE')
 else:
     print('Tu calificaion es EXECELENTE')
+
+
+
+def estrellas(num):
+    for x in range(num):
+        print('*', end='')
