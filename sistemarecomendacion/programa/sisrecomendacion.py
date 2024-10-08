@@ -1,4 +1,5 @@
-import utilities, csv
+import utilities
+import csv
 import numpy as np
 
 # IMPORT RATINGS_SIMPLICADO TO THE PROGRAM
@@ -186,22 +187,22 @@ def matriz_a_csv(userFilm, fichero):
 
 
 def leer_matriz_csv():
-    userFilm = []
+    matriz_user_film = []
     with open('matriz_peliculas.csv')as file:
         csv_reader = csv.reader(file, delimiter=',')
 
         for fila in csv_reader:
             for x in fila:
-                try:      
+                try:
                     fila[fila.index(x)] = float(x)
                 except:
                     pass
-            userFilm.append(fila)
-    return userFilm
+            matriz_user_film.append(fila)
+    return matriz_user_film
 
 
 userFilm = leer_matriz_csv()
-userFilm_prom = promedios(userFilm)
+userFilm_prom = promedios(leer_matriz_csv())
 
 
 def similitud(userFilm_prom):
@@ -223,14 +224,25 @@ def similitud(userFilm_prom):
     return similitud
 
 
-#matriz_a_csv(similitud(userFilm_prom), 'similitud')
+# matriz_a_csv(similitud(userFilm_prom), 'similitud')
 
 matriz_similitud = similitud(userFilm_prom)
 
+
 def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
-    usuario_mas_parecido = matriz_similitud[idUsuario].index(max([x for x in matriz_similitud[idUsuario] if x != 1.0]))
-    usuario = userFilm[idUsuario+1]
-    usuario_mas_parecido = userFilm[usuario_mas_parecido+1]
+    usuario_mas_parecido = matriz_similitud[idUsuario].index(
+        max([x for x in matriz_similitud[idUsuario] if x != 1.0]))
+    usuario = userFilm[idUsuario]
+    usuario_mas_parecido = userFilm[usuario_mas_parecido]
+
+    lista_pelis = []
+    for indice in range(1, len(usuario_mas_parecido)):
+        if usuario[indice] == -1 and usuario_mas_parecido[indice] != -1:
+            lista_pelis.append({'indice': indice,
+                                'rating': usuario_mas_parecido[indice]})
+    lista_pelis = sorted(lista_pelis, key=lambda x: x['rating'], reverse=True)
+    peli_recomendar = userFilm[0][lista_pelis[0]['indice']]
+    return peli_recomendar
 
 
-sistemaderecomendacion(0, matriz_similitud, userFilm)
+print(sistemaderecomendacion(67, matriz_similitud, userFilm))
