@@ -251,10 +251,12 @@ def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
             continue
         lista_pelis = sorted(lista_pelis, key=lambda x: x['rating'], reverse=True)
         peli_recomendar = userFilm[0][lista_pelis[0]['indice']]
+        break
     return peli_recomendar
 
 
-print(sistemaderecomendacion(60, matriz_similitud, userFilm))
+for x in range(1, 500):
+    print(sistemaderecomendacion(x, matriz_similitud, userFilm))
 
 
 

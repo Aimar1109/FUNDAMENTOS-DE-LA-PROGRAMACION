@@ -1,13 +1,24 @@
-import numpy as np
+import csv
 
-lista = [1, 2, 3, 4]
-list1 = [1, 2, 3, 4]
+# LEER LA MATRIZ USERFILM
+def leer_matriz_csv():
+    matriz_user_film = []
+    with open('matriz_peliculas.csv')as file:
+        csv_reader = csv.reader(file, delimiter=',')
 
-lista.max()
+        for fila in csv_reader:
+            for x in fila:
+                try:
+                    fila[fila.index(x)] = float(x)
+                except:
+                    pass
+            matriz_user_film.append(fila)
+    return matriz_user_film
 
-lista = np.array(lista)
-list1 = np.array(list1)
+# MATRIZ USUARIO FILM
+userFilm = leer_matriz_csv()
 
-product_escal = np.dot(lista, list1)
 
-print(product_escal)
+print(userFilm[0][23])
+print(userFilm[60][23])
+print(userFilm[485][23])
