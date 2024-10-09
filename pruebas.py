@@ -3,6 +3,8 @@ import numpy as np
 lista = [1, 2, 3, 4]
 list1 = [1, 2, 3, 4]
 
+lista.max()
+
 lista = np.array(lista)
 list1 = np.array(list1)
 

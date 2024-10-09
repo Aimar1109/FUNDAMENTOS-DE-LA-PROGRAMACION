@@ -58,7 +58,7 @@ def consultaGenero(genero: str, lista_ratings):
     return valoracionGenero
 
 
-# CLASIFICACION DE LOS RATINGS (min 100v views)
+# CLASIFICACION DE LOS RATINGS (min 100 views)
 def clasificacionRating(lista_ratings):
     peliculas_clasificacadas = []
     for pelicula in lista_ratings:
@@ -101,7 +101,7 @@ def lista_a_csv(lista_clasificada):
 # lista_a_csv(clasificacionRating(ratings))
 
 
-### RATINGS CLASIFICADOS ###
+### LEYENDO RATINGS CLASIFICADOS ###
 ratings_clasificados = []
 with open('peliculas_clasificadas.csv') as file:
     csv_reader = csv.reader(file, delimiter=',')
@@ -131,7 +131,7 @@ def algoritmoRecomendacionRating(genero, li_clas):
 # print(algoritmoRecomendacionRating('Drama', ratings_clasificados))
 
 
-# MATRIZ DE FILMS USERS
+# MATRIZ DE X: FILMS | Y: USERS
 def matrizUserPelicula(lista_rating, ratings_clasificados):
     userFilm = []
     userFilm.append([film['title'] for film in ratings_clasificados])
@@ -159,6 +159,7 @@ def matrizUserPelicula(lista_rating, ratings_clasificados):
     return userFilm
 
 
+# CHANGE THE -1 VALUES TO THE AVARAGE OF THE FILM
 def promedios(matriz):
     for fila in matriz:
         if fila[0] == 'X':
@@ -185,7 +186,7 @@ def matriz_a_csv(userFilm, fichero):
 
 # matriz_a_csv((matrizUserPelicula(ratings, ratings_clasificados)), 'matriz_peliculas')
 
-
+# LEER LA MATRIZ USERFILM
 def leer_matriz_csv():
     matriz_user_film = []
     with open('matriz_peliculas.csv')as file:
@@ -200,11 +201,13 @@ def leer_matriz_csv():
             matriz_user_film.append(fila)
     return matriz_user_film
 
-
+# MATRIZ USUARIO FILM
 userFilm = leer_matriz_csv()
+# MATRIZ CON LOS PROMEDIOS
 userFilm_prom = promedios(leer_matriz_csv())
 
 
+# MATRIZ DE X: USUARIO Y Y: USUARIO Y LA SIMILITUD ENTRE LOS VECTORES MEDIANTE EL ANGULO DE COSENO
 def similitud(userFilm_prom):
     matriz = [x[1:] for x in userFilm_prom[1:]]
     similitud = []
@@ -223,26 +226,35 @@ def similitud(userFilm_prom):
         similitud.append(lista)
     return similitud
 
+matriz_similitud = similitud(userFilm_prom)
 
 # matriz_a_csv(similitud(userFilm_prom), 'similitud')
 
-matriz_similitud = similitud(userFilm_prom)
 
-
+# SISTEMA DE RECOMEDACION MEDIANTE USUARIO MAS PARECIDO
 def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
-    usuario_mas_parecido = matriz_similitud[idUsuario].index(
-        max([x for x in matriz_similitud[idUsuario] if x != 1.0]))
-    usuario = userFilm[idUsuario]
-    usuario_mas_parecido = userFilm[usuario_mas_parecido]
 
-    lista_pelis = []
-    for indice in range(1, len(usuario_mas_parecido)):
-        if usuario[indice] == -1 and usuario_mas_parecido[indice] != -1:
-            lista_pelis.append({'indice': indice,
-                                'rating': usuario_mas_parecido[indice]})
-    lista_pelis = sorted(lista_pelis, key=lambda x: x['rating'], reverse=True)
-    peli_recomendar = userFilm[0][lista_pelis[0]['indice']]
+    usuario = userFilm[idUsuario]
+
+    usuarios_mas_parecidos = [x for x in matriz_similitud[idUsuario] if x != 1.0]
+    usuarios_mas_parecidos = [{'usuario': matriz_similitud[idUsuario].index(x),'similitud': x} for x in usuarios_mas_parecidos]
+    usuarios_mas_parecidos = sorted(usuarios_mas_parecidos, key=lambda x: x['similitud'], reverse=True)
+
+    for diccionario in usuarios_mas_parecidos:
+        usuario_mas_parecido = userFilm[diccionario['usuario']]
+        lista_pelis = []
+        for indice in range(1, len(usuario_mas_parecido)):
+            if usuario[indice] == -1 and usuario_mas_parecido[indice] != -1:
+                lista_pelis.append({'indice': indice,
+                                    'rating': usuario_mas_parecido[indice]})
+        if len(lista_pelis) == 0:
+            continue
+        lista_pelis = sorted(lista_pelis, key=lambda x: x['rating'], reverse=True)
+        peli_recomendar = userFilm[0][lista_pelis[0]['indice']]
     return peli_recomendar
 
 
-print(sistemaderecomendacion(67, matriz_similitud, userFilm))
+print(sistemaderecomendacion(60, matriz_similitud, userFilm))
+
+
+
