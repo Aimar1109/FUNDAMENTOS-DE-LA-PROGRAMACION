@@ -141,7 +141,7 @@ def matrizUserPelicula(lista_rating, ratings_clasificados):
     # print(userFilm)
 
     for user in range(1, lista_rating[-1]['userId']+1):
-        lista = [f'user-{user}']
+        lista = [user]
         peliculas_usuario = [film['title']
                              for film in lista_rating if film["userId"] == user]
         ratings_usuario = [film['rating']
@@ -183,10 +183,11 @@ def matriz_a_csv(userFilm, fichero):
     # Escribir todas las filas
         escritor_csv.writerows(userFilm)
 
-
 # matriz_a_csv((matrizUserPelicula(ratings, ratings_clasificados)), 'matriz_peliculas')
 
 # LEER LA MATRIZ USERFILM
+
+
 def leer_matriz_csv():
     matriz_user_film = []
     with open('matriz_peliculas.csv')as file:
@@ -200,6 +201,7 @@ def leer_matriz_csv():
                     pass
             matriz_user_film.append(fila)
     return matriz_user_film
+
 
 # MATRIZ USUARIO FILM
 userFilm = leer_matriz_csv()
@@ -224,11 +226,18 @@ def similitud(userFilm_prom):
                 modulos = np.linalg.norm(user_y) * np.linalg.norm(user_x)
                 lista.append(float(producto_escalar/modulos))
         similitud.append(lista)
+
+    similitud.insert(0, [x[0] for x in userFilm_prom])
+
+    for indice in similitud[1:]:
+        indice.insert(0, int(similitud[0][similitud.index(indice)]))
+
     return similitud
+
 
 matriz_similitud = similitud(userFilm_prom)
 
-# matriz_a_csv(similitud(userFilm_prom), 'similitud')
+matriz_a_csv(similitud(userFilm_prom), 'similitud')
 
 
 # SISTEMA DE RECOMEDACION MEDIANTE USUARIO MAS PARECIDO
@@ -236,9 +245,12 @@ def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
 
     usuario = userFilm[idUsuario]
 
-    usuarios_mas_parecidos = [x for x in matriz_similitud[idUsuario] if x != 1.0]
-    usuarios_mas_parecidos = [{'usuario': matriz_similitud[idUsuario].index(x),'similitud': x} for x in usuarios_mas_parecidos]
-    usuarios_mas_parecidos = sorted(usuarios_mas_parecidos, key=lambda x: x['similitud'], reverse=True)
+    usuarios_mas_parecidos = [
+        x for x in matriz_similitud[idUsuario] if x != 1.0]
+    usuarios_mas_parecidos = [{'usuario': matriz_similitud[idUsuario].index(
+        x), 'similitud': x} for x in usuarios_mas_parecidos]
+    usuarios_mas_parecidos = sorted(
+        usuarios_mas_parecidos, key=lambda x: x['similitud'], reverse=True)
 
     for diccionario in usuarios_mas_parecidos:
         usuario_mas_parecido = userFilm[diccionario['usuario']]
@@ -249,14 +261,12 @@ def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
                                     'rating': usuario_mas_parecido[indice]})
         if len(lista_pelis) == 0:
             continue
-        lista_pelis = sorted(lista_pelis, key=lambda x: x['rating'], reverse=True)
+        lista_pelis = sorted(
+            lista_pelis, key=lambda x: x['rating'], reverse=True)
         peli_recomendar = userFilm[0][lista_pelis[0]['indice']]
         break
     return peli_recomendar
 
 
-for x in range(1, 500):
-    print(sistemaderecomendacion(x, matriz_similitud, userFilm))
-
-
-
+# for x in range(1, 500):
+#    print(sistemaderecomendacion(x, matriz_similitud, userFilm))
