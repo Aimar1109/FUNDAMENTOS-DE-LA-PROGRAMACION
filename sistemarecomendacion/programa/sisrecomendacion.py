@@ -243,28 +243,6 @@ matriz_similitud = similitud(userFilm_prom)
 # SISTEMA DE RECOMEDACION MEDIANTE USUARIO MAS PARECIDO
 def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
 
-    # usuarios_mas_parecidos = [
-    #    x for x in matriz_similitud[idUsuario] if x != 1.0]
-    # usuarios_mas_parecidos = [{'usuario': matriz_similitud[idUsuario].index(
-    #    x), 'similitud': x} for x in usuarios_mas_parecidos]
-    # usuarios_mas_parecidos = [x for x in similitud[]]
-    # usuarios_mas_parecidos = sorted(
-    #    usuarios_mas_parecidos, key=lambda x: x['similitud'], reverse=True)
-
-    # for diccionario in usuarios_mas_parecidos:
-    #    usuario_mas_parecido = userFilm[diccionario['usuario']]
-    #    lista_pelis = []
-    #    for indice in range(1, len(usuario_mas_parecido)):
-    #        if usuario[indice] == -1 and usuario_mas_parecido[indice] != -1:
-    #            lista_pelis.append({'indice': indice,
-    #                                'rating': usuario_mas_parecido[indice]})
-    #    if len(lista_pelis) == 0:
-    #        continue
-    #    lista_pelis = sorted(
-    #        lista_pelis, key=lambda x: x['rating'], reverse=True)
-    #    peli_recomendar = userFilm[0][lista_pelis[0]['indice']]
-    #    break
-
     usuario = [x for x in userFilm if x[0] == idUsuario][0]
     indice_usuario = [
         matriz_similitud.index(x) for x in matriz_similitud if x[0] == idUsuario][0]
@@ -290,4 +268,4 @@ def sistemaderecomendacion(idUsuario, matriz_similitud, userFilm):
     return peli_recomendar
 
 
-print(sistemaderecomendacion(1, matriz_similitud, userFilm))
+print(sistemaderecomendacion(610, matriz_similitud, userFilm))
