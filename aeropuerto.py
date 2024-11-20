@@ -100,14 +100,24 @@ vuelo9 = {
 vuelo10 = {
     "numero_vuelo": "FF102",
     "origen": "Bilbao",
+    "destino": "Salamanca",
+    "salida": "22:00",
+    "llegada": "23:30",
+    "pasajeros": []
+}
+
+vuelo11 = {
+    "numero_vuelo": "FF102",
+    "origen": "París",
     "destino": "Tenesse",
     "salida": "22:00",
     "llegada": "23:30",
     "pasajeros": []
 }
 
+
 # Lista de vuelos
-vuelos = [vuelo1, vuelo9, vuelo10, vuelo2, vuelo3, vuelo4, vuelo5, vuelo6, vuelo7,  vuelo8]
+vuelos = [vuelo1, vuelo9, vuelo10, vuelo2, vuelo3, vuelo4, vuelo5, vuelo6, vuelo7,  vuelo8, vuelo11]
 
 
 # Ejercicio 1
@@ -207,7 +217,7 @@ def busqueda_recursiva(vuelos, trayecto, origen, destino, vuelo_act=None):
             return busqueda_recursiva(vuelos, trayecto, vuelo['destino'], destino, vuelo)
     
     try:
-        return busqueda_recursiva(vuelos, trayecto[:-1], trayecto[-1]['destino'], destino, trayecto[-1])
+        return busqueda_recursiva(vuelos, trayecto[:-1], trayecto[:-1][-1]['destino'], destino, trayecto[-1])
     except IndexError:
         return 'No se ha encontrado'
         
