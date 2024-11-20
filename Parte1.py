@@ -167,5 +167,4 @@ def diferencia(lista1, lista2):
 
     resultado = max1 - max2
 
-    return resultado
-    
+    return resultado    

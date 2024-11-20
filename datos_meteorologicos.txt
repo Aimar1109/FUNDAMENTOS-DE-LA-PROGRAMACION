@@ -1,0 +1,8 @@
+Día; Temperatura; Humedad; Velocidad del viento; 
+Sábado; 14; 76; 4;
+Domingo; 3; 46; 50;
+Viernes; 29; 95; 36;
+Domingo; -9; 29; 100;
+Lunes; 30; 80; 47;
+Sábado; 2; 90; 17;
+Viernes; 38; 25; 54;

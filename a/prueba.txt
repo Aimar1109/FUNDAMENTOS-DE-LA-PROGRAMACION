@@ -1,0 +1,3 @@
+Nombre; edad; dni
+Bruce Wayne; 23; 00001
+Clark Kent; 22; 00002
