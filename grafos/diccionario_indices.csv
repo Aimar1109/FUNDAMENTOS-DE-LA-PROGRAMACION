@@ -4,16 +4,16 @@ Glasgow;2
 London;3
 Cairo;4
 Denver;5
-San Francisco;6
+San francisco;6
 Montreal;7
 Miami;8
-Amman Jordan;9
+Amman jordan;9
 Dusseldorf;10
 Milan;11
 Baltimore;12
 Dubai;13
 Dallas;14
-London Heathrow;15
+London heathrow;15
 Copenhagen;16
 Larnaca;17
 Atlanta;18
@@ -24,30 +24,30 @@ Istanbul;22
 Gothenburg;23
 Heathrow;24
 Sydney;25
-London Gatwick;26
+London gatwick;26
 Manchester;27
 Berlin;28
-Tel Aviv;29
-Los Angeles;30
+Tel aviv;29
+Los angeles;30
 Boston;31
-Cape Town;32
-Dallas Ft Worth;33
+Cape town;32
+Dallas ft worth;33
 Accra;34
 Nairobi;35
 Edinburgh;36
 Vancouver;37
-Sao Paulo;38
+Sao paulo;38
 Belfast;39
 Washington;40
 Dublin;41
 Edmonton;42
 Amsterdam;43
-Hong Kong;44
-Paris CDG;45
+Hong kong;44
+Paris cdg;45
 Portland;46
 Cancun;47
 Phoenix;48
-Dallas Fort-Worth;49
+Dallas fort-worth;49
 Islamabad;50
 Johannesburg;51
 Zurich;52
@@ -56,7 +56,7 @@ Dubrovnik;54
 Columbus;55
 Basel;56
 Athens;57
-São Paulo;58
+São paulo;58
 Pisa;59
 Chicago;60
 Riyadh;61
@@ -68,15 +68,15 @@ Austin;66
 Gatwick;67
 Singapore;68
 Male;69
-New York;70
+New york;70
 Bangalore;71
 Lisbon;72
 Montréal;73
 Durban;74
-Las Vegas;75
+Las vegas;75
 Warsaw;76
 Kingston;77
-Washington DC;78
+Washington dc;78
 Tenerife;79
 Stockholm;80
 Frankfurt;81
@@ -85,7 +85,7 @@ Gibraltar;83
 Prague;84
 Abuja;85
 Mykonos;86
-Washington Dulles;87
+Washington dulles;87
 Moscow;88
 Bucharest;89
 Seattle;90
@@ -94,263 +94,251 @@ Aberdeen;92
 Ottawa;93
 Antigua;94
 Sofia;95
-Mexico City;96
+Mexico city;96
 Munich;97
 Newcastle;98
-London City;99
+London city;99
 Rome;100
-San Diego;101
+San diego;101
 Toronto;102
 Tokyo;103
 Vienna;104
-London-Heathrow;105
+London-heathrow;105
 Nashville;106
 Paris;107
-Rio de Janeiro;108
-San Jose;109
-New York ;110
-Rio De Janeiro;111
-Keflavik;112
-Budapest;113
-Toulouse;114
-Brussels;115
-doha;116
-Tirana;117
-Bordeaux;118
-Seychelles;119
-Jeddah;120
-Hyderabad;121
-Kuala Lumpur;122
-Amman;123
-New York JFK;124
-Buenos Aires;125
-Bari;126
-Abu Dhabi;127
-Calgary;128
-Newark;129
-Kos;130
-Cephalonia;131
-Mahe;132
-Palma de Mallorca;133
-Chennai;134
-New Orleans;135
-Inverness;136
-Palma;137
-Johannesburg OR Tambo;138
-Grenada;139
-Rotterdam;140
-Hamburg;141
-Belfast ;142
-Lima;143
-Lyon;144
-Marseille;145
-Faro;146
-Rome Fiumicino;147
-Houston;148
-St Lucia;149
-Leeds Bradford;150
-Cologne;151
-Tampa;152
- Bridgetown;153
-Tokyo Narita;154
-Bermuda;155
-Barcelona;156
-Venice;157
-Stuttgart;158
-Nassau;159
-St Petersburg;160
-Bangkok;161
-Brindisi;162
-Heraklion;163
-Philadelphia;164
-Zagreb;165
-Paphos;166
-Seville;167
-HKG;168
-Delhi;169
-Turin;170
-GIG;171
-Florence;172
-Naples;173
-Fort Lauderdale;174
-Beijing;175
-Edimbourgh;176
-Rio de Janiero;177
-Reykjavik;178
- London Heathrow;179
-Saint Lucia;180
-Funchal;181
-Berlin Tegel;182
-Bologna;183
-Seoul Incheon;184
-Oakland;185
-Düsseldorf;186
-Tokyo Haneda;187
-Shanghai;188
-London Heathrow ;189
-Grand Cayman;190
-Port of Spain;191
-Kalamata;192
-"London Heathrow;193
-Zakinthos;194
-Belfast City;195
-Salzburg;196
-Oslo;197
-Catania;198
-Bergen;199
-Krakow;200
-Mauritius;201
-Malta;202
-Corfu;203
-Leeds;204
-Valencia;205
-Luxembourg;206
-Seoul;207
-Madeira;208
-LHR;209
-Bahrain;210
-Zürich;211
-London LGW;212
-Punta Cana;213
-Stavanger;214
-ORY;215
-Marrakech;216
-GOT;217
-Kuwait;218
-Tehran;219
-LBA;220
-TPA;221
-LAX;222
-SOF;223
-IAD;224
-YVR;225
-LGW;226
-MAD;227
-MLA;228
-SFO;229
-CDG;230
-BKK;231
-GLA;232
-LED;233
-PVG;234
-JFK;235
-ATH;236
-FUE;237
-IAH;238
-KUL;239
-MAN;240
-MIA;241
-SYD;242
-YYZ;243
-ARN;244
-IKA;245
-CUN;246
-DXB;247
-BUD;248
-FRA;249
-BWI;250
-KBP;251
-UVF;252
-SAN;253
-DFW;254
-CTU;255
-NBO;256
-SEA;257
-SIN;258
-MAA;259
-TLV;260
-RAK;261
-AMS;262
-DUS;263
-JNB;264
-CPT;265
-BCN;266
-LIS;267
-DUB;268
-MRU;269
-LCA;270
-UVF ;271
-ICN;272
-EDI;273
-CNX ;274
-HND;275
-BRI;276
-PMI;277
-AGP;278
-DBV;279
-YYC;280
-LCY;281
-LAS;282
-BOS;283
-SJO;284
-MEL;285
-SJC;286
-BAH;287
-ATL;288
-AUH;289
-NAP;290
-OPO;291
-MUC;292
-VIE;293
-PRG;294
-PHX;295
-"LHR;296
-TXL;297
-WAW;298
-PHL;299
-ABV;300
-ZRH;301
-MEX;302
-DOH;303
-GRU;304
-BLR;305
-ABZ;306
-BSL;307
-MXP;308
-GVA;309
-MRS;310
-NCL;311
-NAS;312
-BGI;313
-IBZ;314
-LYS;315
-PSA;316
-ACC;317
-OSL;318
-ORD;319
-FCO;320
-GIB;321
-PEK;322
-RUH;323
-CPH;324
-SVQ;325
-IST;326
-TRN;327
-AUS;328
-PUJ;329
-VCE;330
-OUL;331
-OTP;332
-KWI;333
-MCO;334
-FNC;335
-iAH;336
-NCE;337
-JED;338
-YUL;339
-Hannover;340
-Kiev;341
-SSH;342
-Heathrow (London);343
-HEL;344
-Fuereventura;345
-lgw;346
-St Kitts;347
-DME;348
-Lebanon;349
-Istambul;350
-Verona;351
-Vancouver Canada;352
-CAI;353
-Helsinki;354
-BOM;355
+Rio de janeiro;108
+San jose;109
+Keflavik;110
+Budapest;111
+Toulouse;112
+Brussels;113
+Tirana;114
+Bordeaux;115
+Seychelles;116
+Jeddah;117
+Hyderabad;118
+Kuala lumpur;119
+Amman;120
+New york jfk;121
+Buenos aires;122
+Bari;123
+Abu dhabi;124
+Calgary;125
+Newark;126
+Kos;127
+Cephalonia;128
+Mahe;129
+Palma de mallorca;130
+Chennai;131
+New orleans;132
+Inverness;133
+Palma;134
+Johannesburg or tambo;135
+Grenada;136
+Rotterdam;137
+Hamburg;138
+Lima;139
+Lyon;140
+Marseille;141
+Faro;142
+Rome fiumicino;143
+Houston;144
+St lucia;145
+Leeds bradford;146
+Cologne;147
+Tampa;148
+Tokyo narita;149
+Bermuda;150
+Barcelona;151
+Venice;152
+Stuttgart;153
+Nassau;154
+St petersburg;155
+Bangkok;156
+Brindisi;157
+Heraklion;158
+Philadelphia;159
+Zagreb;160
+Paphos;161
+Seville;162
+Hkg;163
+Delhi;164
+Turin;165
+Gig;166
+Florence;167
+Naples;168
+Fort lauderdale;169
+Beijing;170
+Edimbourgh;171
+Rio de janiero;172
+Reykjavik;173
+Saint lucia;174
+Funchal;175
+Berlin tegel;176
+Bologna;177
+Seoul incheon;178
+Oakland;179
+Düsseldorf;180
+Tokyo haneda;181
+Shanghai;182
+Grand cayman;183
+Port of spain;184
+Kalamata;185
+Zakinthos;186
+Belfast city;187
+Salzburg;188
+Oslo;189
+Catania;190
+Bergen;191
+Krakow;192
+Mauritius;193
+Malta;194
+Corfu;195
+Leeds;196
+Valencia;197
+Luxembourg;198
+Seoul;199
+Madeira;200
+Lhr;201
+Bahrain;202
+Zürich;203
+London lgw;204
+Punta cana;205
+Stavanger;206
+Ory;207
+Marrakech;208
+Got;209
+Kuwait;210
+Tehran;211
+Lba;212
+Tpa;213
+Lax;214
+Sof;215
+Iad;216
+Yvr;217
+Lgw;218
+Mad;219
+Mla;220
+Sfo;221
+Cdg;222
+Bkk;223
+Gla;224
+Led;225
+Pvg;226
+Jfk;227
+Ath;228
+Fue;229
+Iah;230
+Kul;231
+Man;232
+Mia;233
+Syd;234
+Yyz;235
+Arn;236
+Ika;237
+Cun;238
+Dxb;239
+Bud;240
+Fra;241
+Bwi;242
+Kbp;243
+Uvf;244
+San;245
+Dfw;246
+Ctu;247
+Nbo;248
+Sea;249
+Sin;250
+Maa;251
+Tlv;252
+Rak;253
+Ams;254
+Dus;255
+Jnb;256
+Cpt;257
+Bcn;258
+Lis;259
+Dub;260
+Mru;261
+Lca;262
+Icn;263
+Edi;264
+Cnx;265
+Hnd;266
+Bri;267
+Pmi;268
+Agp;269
+Dbv;270
+Yyc;271
+Lcy;272
+Las;273
+Bos;274
+Sjo;275
+Mel;276
+Sjc;277
+Bah;278
+Atl;279
+Auh;280
+Nap;281
+Opo;282
+Muc;283
+Vie;284
+Prg;285
+Phx;286
+Txl;287
+Waw;288
+Phl;289
+Abv;290
+Zrh;291
+Mex;292
+Doh;293
+Gru;294
+Blr;295
+Abz;296
+Bsl;297
+Mxp;298
+Gva;299
+Mrs;300
+Ncl;301
+Nas;302
+Bgi;303
+Ibz;304
+Lys;305
+Psa;306
+Acc;307
+Osl;308
+Ord;309
+Fco;310
+Gib;311
+Pek;312
+Ruh;313
+Cph;314
+Svq;315
+Ist;316
+Trn;317
+Aus;318
+Puj;319
+Vce;320
+Oul;321
+Otp;322
+Kwi;323
+Mco;324
+Fnc;325
+Nce;326
+Jed;327
+Yul;328
+Hannover;329
+Kiev;330
+Ssh;331
+Heathrow (london);332
+Hel;333
+Fuereventura;334
+St kitts;335
+Dme;336
+Lebanon;337
+Istambul;338
+Verona;339
+Vancouver canada;340
+Cai;341
+Helsinki;342
+Bom;343
