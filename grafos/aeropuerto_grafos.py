@@ -169,8 +169,8 @@ def algoritmo_busqueda_vuelos_bfs(matriz, dict_indices, origen, destino):
 
     # Busqueda en cada capa va añadiendo las siguientes posibilidades a un nuevo diccionario y una vez recorrido todo los destino pasa a la siguiente capa
     while not encontrado:
+        new_posibilities = {}
         for pos in posibilities:
-            new_posibilities = {}
             if posibilities[pos][0] == capa:
                 for destino_id in range(len(matriz[dict_indices[pos]])):
                     if destino_id == dict_destino[destino] and  matriz[dict_indices[pos]][destino_id] == 1:
@@ -182,9 +182,14 @@ def algoritmo_busqueda_vuelos_bfs(matriz, dict_indices, origen, destino):
             if encontrado:
                 break
         # Añdair las nuevas posibilidades porque si voy añadiendolas directamente me jode el for porque esta editando las posibilidades
-        for new_pos in new_posibilities:
-            posibilities[new_pos] = new_posibilities[new_pos]
-        capa += 1
+        if len(new_posibilities) > 0:
+            for new_pos in new_posibilities:
+                if new_pos in posibilities.keys():
+                    continue
+                posibilities[new_pos] = new_posibilities[new_pos]
+            capa += 1
+        else:
+            return 'No se ha encontrado'
     
     # Una vez encontrado el destino empezar a ir para atras haciendo uso de aeropuerto padre y la capa
     trayectoria = [[encontrado, padre]]
@@ -219,9 +224,18 @@ if __name__ == "__main__":
         guardar_matriz(matriz_vuelos)
 
     try:
-        print(algoritmo_busqueda_vuelos_profunda(matriz_vuelos, dict_vuelos, 'Barbados', 'Dubai'))
+        print(algoritmo_busqueda_vuelos_profunda(matriz_vuelos, dict_vuelos, 'Barbados', 'Amman jordan'))
     except RecursionError:
         print('No se a podido encontrar')
-    
-    print(algoritmo_busqueda_vuelos_bfs(matriz_vuelos, dict_vuelos, 'Barbados', 'Dubai'))
+    #for i in dict_vuelos:
+    #    if i != 'Barbados':
+    #        print(algoritmo_busqueda_vuelos_bfs(matriz_vuelos, dict_vuelos, 'Barbados', i))
 
+    print(algoritmo_busqueda_vuelos_bfs(matriz_vuelos, dict_vuelos, 'Barbados', 'Amman jordan'))
+
+# PROBLEMAS:
+# El diccionario de indices solo tiene de indices aeropuertos con salidas y no contempla aeropuertos que no tienen
+# salidas y solo tienen entradas
+#
+# 
+# 
