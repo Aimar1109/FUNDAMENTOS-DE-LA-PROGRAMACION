@@ -110,7 +110,7 @@ def encontrar_trayectoria(origen, posibilities, encontrado, padre, capa, index_c
             # Por la posibilidad esta en mas de una capa
             for i in range(len(posibilities_t[pos][0])):
                 # Si el padre es el origen hemos finalizado la busqueda de la ruta
-                if pos == origen and capa_tra == posibilities_t[pos][0][i] == capa_tra:
+                if pos == origen and posibilities_t[pos][0][i] == capa_tra:
                     trayectoria.append([pos, posibilities_t[pos][1][i]])
                     capa_tra -= 1
                     break
@@ -120,13 +120,17 @@ def encontrar_trayectoria(origen, posibilities, encontrado, padre, capa, index_c
                     capa_tra -= 1
 
         # Buscar la ultima capa para eliminarlas de las posibilidades
-        for pos in keys:
+        for pos in keys: 
             if posibilities_t[pos][0][i] > capa_tra:
                 borrar.append(pos)
         
         # Borrar la ultima capa
         for b in borrar:
+            if len(posibilities_t[b][0]) > 1:
+                continue
             posibilities_t.pop(b)
+    
+        j = 0
     
     return trayectoria[:-1]
 
@@ -164,7 +168,7 @@ def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
 
                     # Si el tiene vuelo al destino
                     if destino_id == dict_destino[destino] and  matriz[dict_ind[pos]][destino_id] > 0:
-                        rutas.append([encontrar_trayectoria(origen, posibilities, destino, pos, capa, c), posibilities[pos][2]+matriz[dict_ind[pos]][destino_id]])
+                        rutas.append([encontrar_trayectoria(origen, posibilities, destino, pos, capa, c), posibilities[pos][2][c]+matriz[dict_ind[pos]][destino_id]])
 
                     # Si no tiene vuelo al destino pero tiene un vuelo a un nuevo aeropuerto 
                     elif matriz[dict_ind[pos]][destino_id] > 0:
@@ -185,11 +189,15 @@ def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
                     posibilities[new_pos][0].append(new_posibilities[new_pos][0])
                     posibilities[new_pos][1].append(new_posibilities[new_pos][1])
                     posibilities[new_pos][2].append(new_posibilities[new_pos][2])
+                    continue
 
                 posibilities[new_pos] = [[new_posibilities[new_pos][0]], [new_posibilities[new_pos][1]], [new_posibilities[new_pos][2]]]
             capa += 1
         else:
             final = True
+        
+        if capa > 6 and len(rutas) > 0:
+                final = True
     
     return rutas
 
