@@ -224,18 +224,16 @@ if __name__ == "__main__":
         guardar_matriz(matriz_vuelos)
 
     try:
-        print(algoritmo_busqueda_vuelos_profunda(matriz_vuelos, dict_vuelos, 'Barbados', 'Amman jordan'))
+        print(algoritmo_busqueda_vuelos_profunda(matriz_vuelos, dict_vuelos, 'Barbados', 'Madrid'))
     except RecursionError:
         print('No se a podido encontrar')
     #for i in dict_vuelos:
     #    if i != 'Barbados':
     #        print(algoritmo_busqueda_vuelos_bfs(matriz_vuelos, dict_vuelos, 'Barbados', i))
 
-    print(algoritmo_busqueda_vuelos_bfs(matriz_vuelos, dict_vuelos, 'Barbados', 'Amman jordan'))
+    print(algoritmo_busqueda_vuelos_bfs(matriz_vuelos, dict_vuelos, 'Barbados', 'Madrid'))
 
 # PROBLEMAS:
 # El diccionario de indices solo tiene de indices aeropuertos con salidas y no contempla aeropuertos que no tienen
 # salidas y solo tienen entradas
-#
-# 
 # 
