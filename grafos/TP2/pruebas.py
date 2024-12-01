@@ -1,3 +1,3 @@
-a = [1, 2, 3]
+a = {1:1}
 
-print(a.index(4))
+print(a[2])

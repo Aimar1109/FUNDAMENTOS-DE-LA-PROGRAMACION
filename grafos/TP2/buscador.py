@@ -8,14 +8,18 @@ def crear_vuelos_limpios():
 
         columnas = next(contenido)
 
-        indices = [columnas.index('Origin'), columnas.index('Dest'), columnas.index('FlightTimeMin')]
+        indices = [columnas.index('Origin'), columnas.index('Dest'), columnas.index('FlightTimeMin'), columnas.index('AvgTicketPrice')]
         lista =  []
         for row in contenido:
             mins = ''
             for x in row[indices[2]]:
                 if x != ',':
                     mins += x
-            lista.append([row[indices[0]], row[indices[1]], str(mins)])
+            price = ''
+            for p in row[indices[3]]:
+                if p != ',':
+                    price += p
+            lista.append([row[indices[0]], row[indices[1]], str(mins), str(price)[1:]])
         f.close()
     
     with open('clean_flights.csv', 'w', encoding='utf-8') as f:
@@ -23,6 +27,10 @@ def crear_vuelos_limpios():
             f.write(';'.join(vuelo)+'\n')
         f.close()
     
+    for vuelo in lista:
+        vuelo[2] = float(vuelo[2])
+        vuelo[3] = float(vuelo[3])
+
     return lista
     
 def leer_vuelos_limpios():
@@ -31,6 +39,7 @@ def leer_vuelos_limpios():
         for linea in f:
             linea = linea.strip().split(';')
             linea[2] = float(linea[2])
+            linea[3] = float(linea[3])
             lista.append(linea)
         f.close()
     
@@ -136,7 +145,19 @@ def encontrar_trayectoria(origen, posibilities, encontrado, padre, capa):
     return trayectoria
 
 
-def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
+def calcular_precio(lista_vuelos, ruta):
+    suma = 0
+    ruta_p = copy.deepcopy(ruta)
+    for r in ruta_p:
+        r.reverse()
+        for v in lista_vuelos:
+            if r[0] == v[0] and r[1] == v[1]:
+                suma += v[-1]
+
+    return suma
+
+
+def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino, lista_vuelos):
     # Busqueda de vuelos por bfs, recorriendo primero todas las posibilidades dentro de un capa
     # Para ello uso un diccionario con el aeropuerto de clave y una lista con la capa y su aeropuerto padre
 
@@ -162,17 +183,18 @@ def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
                 if posibilities[pos][-1][0] == capa:
 
                     # Para cada aeropuerto de la capa buscar todos los vuelos de salida que tenga
-                    for destino_id in range(len(matriz[dict_ind[pos]])):
+                    for destino_id in range(len(dict_col)):
 
                         # Si el tiene vuelo al destino
                         if destino_id == dict_destino[destino] and  matriz[dict_ind[pos]][destino_id] > 0:
-                            rutas.append([encontrar_trayectoria(origen, posibilities, destino, pos, capa), posibilities[pos][-1][-1]+matriz[dict_ind[pos]][destino_id]])
+                            ruta = encontrar_trayectoria(origen, posibilities, destino, pos, capa)
+                            rutas.append([ruta, posibilities[pos][-1][-1]+matriz[dict_ind[pos]][destino_id], calcular_precio(lista_vuelos, ruta)])
 
                         # Si no tiene vuelo al destino pero tiene un vuelo a un nuevo aeropuerto 
                         elif matriz[dict_ind[pos]][destino_id] > 0:
                                 
                             # Buscar el nombre del aeropuerto destino
-                            aeropuerto_n = [x for x in dict_ind if dict_ind[x] == destino_id][0]
+                            aeropuerto_n = [x for x in dict_col if dict_col[x] == destino_id][0]
 
                             if aeropuerto_n in posibilities.keys() and pos in [x[1] for x in posibilities[aeropuerto_n]]:
                                 continue
@@ -211,6 +233,7 @@ def elegir_rutas(rutas):
     # Funcion para elegir la ruta con menos tiempo y la que menos escalas tenga
     ruta_menos_escalas_tiempo = rutas[0]
     ruta_menos_tiempo = rutas[0]
+    ruta_barata = rutas[0]
     for ruta in rutas:
         if len(ruta_menos_escalas_tiempo[0]) > len(ruta[0]):
             ruta_menos_escalas_tiempo = ruta
@@ -218,8 +241,10 @@ def elegir_rutas(rutas):
             ruta_menos_escalas_tiempo = ruta
         if ruta_menos_tiempo[1] > ruta[1]:
             ruta_menos_tiempo = ruta
+        if ruta_barata[-1] > ruta[-1]:
+            ruta_barata = ruta
     
-    return ruta_menos_escalas_tiempo, ruta_menos_tiempo
+    return ruta_menos_escalas_tiempo, ruta_menos_tiempo, ruta_barata
 
 
 if __name__ == '__main__':
@@ -258,18 +283,22 @@ if __name__ == '__main__':
         for x in dict_columnas:
             if c2 == 5:
                 break
-            rutas_vuelos = algoritmo_busqueda(matriz_vuelos, dict_indices, dict_columnas, i, x)
+            rutas_vuelos = algoritmo_busqueda(matriz_vuelos, dict_indices, dict_columnas, i, x, vuelos)
             if len(rutas_vuelos) == 1:
                 print(rutas_vuelos[0])
             elif len(rutas_vuelos) > 0:
-                ruta_m_e, ruta_m_t = elegir_rutas(rutas_vuelos)
-                if ruta_m_e == ruta_m_t:
+                ruta_m_e, ruta_m_t, ruta_b = elegir_rutas(rutas_vuelos)
+                if ruta_m_e == ruta_m_t and ruta_b == ruta_m_e:
                     print(ruta_m_e)
                 else:   
                     print(ruta_m_e)
                     print(ruta_m_t)
+                    print(ruta_b)
             else:
                 print('No se ha encontrado la ruta')
             print('')
             c2 +=1
         c1 += 1
+
+
+    print(matriz_vuelos[4][79])
