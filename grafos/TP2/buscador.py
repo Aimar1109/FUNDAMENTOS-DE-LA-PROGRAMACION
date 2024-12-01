@@ -1,4 +1,5 @@
 import csv
+import copy
 
 def crear_vuelos_limpios():
     with open('flights.csv', 'r', encoding='utf-8') as f:
@@ -91,48 +92,48 @@ def leer_matriz():
         f.close()
     return matriz
 
-def encontrar_trayectoria(origen, posibilities, encontrado, padre, capa, index_c):
+
+def encontrar_trayectoria(origen, posibilities, encontrado, padre, capa):
     # Funcion para encontrar la ruta una vez encontrado el destino
 
     # Varibles locales
     trayectoria = [[encontrado, padre]]
     capa_tra = capa
     # Copia de las posibilidades para que poder borrar y hacer la busqueda
-    posibilities_t = posibilities.copy()
+    posibilities_t = copy.deepcopy(posibilities)
 
     # Buscar ruta
-    while capa_tra >= 0:
+    while capa_tra > 0:
         borrar = []
-        keys = [x for x in posibilities_t.keys()]
-        keys.reverse()
         # Darle la vuelta al diccionario porque el padre tiene que estar al final
-        for pos in keys:
-            # Por la posibilidad esta en mas de una capa
-            for i in range(len(posibilities_t[pos][0])):
-                # Si el padre es el origen hemos finalizado la busqueda de la ruta
-                if pos == origen and posibilities_t[pos][0][i] == capa_tra:
-                    trayectoria.append([pos, posibilities_t[pos][1][i]])
-                    capa_tra -= 1
-                    break
-                # Si encuentra al padre lo añade a la ruta
-                elif posibilities_t[pos][0][i] == capa_tra and pos == trayectoria[-1][1]:
-                    trayectoria.append([pos, posibilities_t[pos][1][i]])
-                    capa_tra -= 1
+        for pos in posibilities_t.keys():
+            # Si el padre es el origen hemos finalizado la busqueda de la ruta
+            if pos == origen and capa_tra in [x[0] for x in posibilities_t[pos]]:
+                trayectoria.append([pos, posibilities_t[pos][1]])
+                capa_tra -= 1
+                break
+            # Si encuentra al padre lo añade a la ruta
+            elif  capa_tra in [x[0] for x in posibilities_t[pos]] and pos == trayectoria[-1][-1]:
+                
+                trayectoria.append([pos, [x[1] for x in posibilities_t[pos] if x[0] == capa_tra][0]])
+                capa_tra -= 1
 
         # Buscar la ultima capa para eliminarlas de las posibilidades
-        for pos in keys: 
-            if posibilities_t[pos][0][i] > capa_tra:
-                borrar.append(pos)
+        for pos in  posibilities_t.keys():
+            a = posibilities_t[pos]
+            for c in posibilities_t[pos]:
+                if c[0] > capa_tra:
+                    posibilities_t[pos].remove(c)
         
         # Borrar la ultima capa
+        for pos in posibilities_t.keys():
+            if len(posibilities_t[pos]) == 0:
+                borrar.append(pos)
+        
         for b in borrar:
-            if len(posibilities_t[b][0]) > 1:
-                continue
             posibilities_t.pop(b)
     
-        j = 0
-    
-    return trayectoria[:-1]
+    return trayectoria
 
 
 def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
@@ -148,7 +149,8 @@ def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
     rutas = []
     capa = 0
     final = False
-    posibilities[origen] = [[capa], [None], [0]]
+    posibilities[origen] = [[capa, None, 0]] # posibilities[origen] = [[capa, None, 0]]
+
 
     # Busqueda en cada capa va añadiendo las siguientes posibilidades a un nuevo diccionario y una vez recorrido todo los destino pasa a la siguiente capa
     while not final:
@@ -156,27 +158,36 @@ def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
         new_posibilities = {}
         # Recorrer las posibilidades por capa
         for pos in posibilities:
-            try:
-                # Solo ver las posibilidades que hay en la capa
-                try:
-                    c = posibilities[pos][0].index(capa)
-                except ValueError:
+            try:                            
+                if posibilities[pos][-1][0] == capa:
+
+                    # Para cada aeropuerto de la capa buscar todos los vuelos de salida que tenga
+                    for destino_id in range(len(matriz[dict_ind[pos]])):
+
+                        # Si el tiene vuelo al destino
+                        if destino_id == dict_destino[destino] and  matriz[dict_ind[pos]][destino_id] > 0:
+                            rutas.append([encontrar_trayectoria(origen, posibilities, destino, pos, capa), posibilities[pos][-1][-1]+matriz[dict_ind[pos]][destino_id]])
+
+                        # Si no tiene vuelo al destino pero tiene un vuelo a un nuevo aeropuerto 
+                        elif matriz[dict_ind[pos]][destino_id] > 0:
+                                
+                            # Buscar el nombre del aeropuerto destino
+                            aeropuerto_n = [x for x in dict_ind if dict_ind[x] == destino_id][0]
+
+                            if aeropuerto_n in posibilities.keys() and pos in [x[1] for x in posibilities[aeropuerto_n]]:
+                                continue
+                            elif aeropuerto_n == pos or aeropuerto_n == origen:
+                                continue
+                            tiempo = posibilities[pos][-1][-1]+matriz[dict_ind[pos]][destino_id]
+                            # Si el aeropuerto de destino no esta ya en aeropuerto
+                            if aeropuerto_n in new_posibilities.keys():
+                                if tiempo > new_posibilities[aeropuerto_n][0][-1]:
+                                    continue
+                            new_posibilities[aeropuerto_n] = [[capa+1, pos, tiempo]]
+                # if pos == list(posibilities.keys())[-1]:
+                #     break
+                else:
                     continue
-
-                # Para cada aeropuerto de la capa buscar todos los vuelos de salida que tenga
-                for destino_id in range(len(matriz[dict_ind[pos]])):
-
-                    # Si el tiene vuelo al destino
-                    if destino_id == dict_destino[destino] and  matriz[dict_ind[pos]][destino_id] > 0:
-                        rutas.append([encontrar_trayectoria(origen, posibilities, destino, pos, capa, c), posibilities[pos][2][c]+matriz[dict_ind[pos]][destino_id]])
-
-                    # Si no tiene vuelo al destino pero tiene un vuelo a un nuevo aeropuerto 
-                    elif matriz[dict_ind[pos]][destino_id] > 0:
-                        # Buscar el nombre del aeropuerto destino
-                        aeropuerto_n = [x for x in dict_ind if dict_ind[x] == destino_id][0]
-                        # Pensar que pasa si en desde dos aeropuertos se llega al mismo aeropuerto de la misma capa
-                        new_posibilities[aeropuerto_n] = [capa+1, pos, posibilities[pos][2][c]+matriz[dict_ind[pos]][destino_id]]
-            
             # Cuando el aeropuerto no tiene vuelos de salida
             except KeyError:
                 pass
@@ -184,20 +195,15 @@ def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino):
         # Añdair las nuevas posibilidades porque si voy añadiendolas directamente me jode el for porque esta editando las posibilidades
         if len(new_posibilities) > 0:
             for new_pos in new_posibilities:
-                # Si se repite un aeropuerto en capas distintas lo guardo en la lista
                 if new_pos in posibilities.keys():
-                    posibilities[new_pos][0].append(new_posibilities[new_pos][0])
-                    posibilities[new_pos][1].append(new_posibilities[new_pos][1])
-                    posibilities[new_pos][2].append(new_posibilities[new_pos][2])
+                    if new_posibilities[new_pos][0][1] in [x[1] for x in posibilities[new_pos]]:
+                        continue
+                    posibilities[new_pos].append(new_posibilities[new_pos][0])
                     continue
-
-                posibilities[new_pos] = [[new_posibilities[new_pos][0]], [new_posibilities[new_pos][1]], [new_posibilities[new_pos][2]]]
+                posibilities[new_pos] = new_posibilities[new_pos]
             capa += 1
         else:
             final = True
-        
-        if capa > 6 and len(rutas) > 0:
-                final = True
     
     return rutas
 
@@ -238,28 +244,32 @@ if __name__ == '__main__':
 
     # PRUEBAS:
 
-    #rutas_vuelos = algoritmo_busqueda(matriz_vuelos, dict_indices, dict_columnas, 'Portland International Jetport Airport', 'San Francisco International Airport')
-    #if len(rutas_vuelos) > 0:
-    #    ruta_esc, ruta_tiemp = elegir_rutas(rutas_vuelos)
-    #    print(ruta_esc)
-    #    print(ruta_tiemp)
+    # rutas_vuelos = algoritmo_busqueda(matriz_vuelos, dict_indices, dict_columnas, 'Portland International Jetport Airport', 'San Francisco International Airport')
+    # ruta_esc, ruta_tiemp = elegir_rutas(rutas_vuelos)
+    # print(ruta_esc)
+    # print(ruta_tiemp)
 
     # Comprobar todas las posibilidades
+    c1 = 0
     for i in dict_indices:
+        c2 = 0
+        if c1 == 5:
+            break
         for x in dict_columnas:
+            if c2 == 5:
+                break
             rutas_vuelos = algoritmo_busqueda(matriz_vuelos, dict_indices, dict_columnas, i, x)
             if len(rutas_vuelos) == 1:
                 print(rutas_vuelos[0])
             elif len(rutas_vuelos) > 0:
                 ruta_m_e, ruta_m_t = elegir_rutas(rutas_vuelos)
-                print(ruta_m_e)
-                print(ruta_m_t)
+                if ruta_m_e == ruta_m_t:
+                    print(ruta_m_e)
+                else:   
+                    print(ruta_m_e)
+                    print(ruta_m_t)
             else:
                 print('No se ha encontrado la ruta')
             print('')
-
-# PROBLEMAS:
-# Si de una capa a la siguiente desde dos aeropuertos distintos se llega al mismo destino
-# ahora mismo se va sobreescribiendo. Incluso si estan en distintas aunque haya mas escalas puede
-# ser que se tarde menos a uno que tenga menos escalas (PENSAR)
-# Si lo sobreescribo me jode la busqueda por capas a la hora de buscar la trayectoria
+            c2 +=1
+        c1 += 1
