@@ -198,7 +198,7 @@ def algoritmo_busqueda(matriz, dict_ind, dict_col, origen, destino, lista_vuelos
 
                             if aeropuerto_n in posibilities.keys() and pos in [x[1] for x in posibilities[aeropuerto_n]]:
                                 continue
-                            elif aeropuerto_n == pos or aeropuerto_n == origen:
+                            elif aeropuerto_n == origen:
                                 continue
                             tiempo = posibilities[pos][-1][-1]+matriz[dict_ind[pos]][destino_id]
                             # Si el aeropuerto de destino no esta ya en aeropuerto
@@ -299,6 +299,3 @@ if __name__ == '__main__':
             print('')
             c2 +=1
         c1 += 1
-
-
-    print(matriz_vuelos[4][79])
