@@ -8,10 +8,14 @@ def escalonada(matriz):
         return False
 
     for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            if i < j and matriz[i][j] != 0:
+        for j in range(i, len(matriz[i])):
+            if matriz[i][j] == 1:
+                for j in range(i+1, len(matriz)):
+                    if matriz[j][i] != 0:
+                        return False
+                break
+            elif matriz[i][j] != 0:
                 return False
-
     return True
 
 
@@ -29,37 +33,53 @@ def mover_lineas(matriz, ln1, ln2):
 def uno(matriz, fila, pivote):
     # Primera operacion que busca que haya un 1 en alguna fila de pivote o si hay un 0 cambiarlo por otra fila
     if matriz[fila][pivote] == 1:
-        return matriz
+        return matriz, pivote
     
     # MOVIENDO LINEAS
     for i in range(fila, len(matriz)):
         if matriz[i][pivote] == 1:
-            matriz = mover_lineas(matriz, 0, i)
-            return matriz
+            matriz = mover_lineas(matriz, fila, i)
+            return matriz, pivote
     
     if matriz[fila][pivote] == 0:
         for i in range(fila+1, len(matriz)):
             if matriz[i][pivote] == 1:
-                matriz = mover_lineas(matriz, 0, i)
-                return matriz
+                matriz = mover_lineas(matriz, fila, i)
+                return matriz, pivote
 
         for i in range(fila+1, len(matriz)):
             if matriz[i][pivote] != 0:
-                matriz = mover_lineas(matriz, 0, i)
-                
+                matriz = mover_lineas(matriz, fila, i)
+    
+    col = None
+    if matriz[fila][pivote] == 0:
+        for j in range(pivote+1, len(matriz[fila])):
+            for i in range(fila, len(matriz)):
+                if matriz[i][j] == 1:
+                    col = j
+                    matriz = mover_lineas(matriz, fila, i)
+                    break
+                elif matriz[i][j] != 0:
+                    col = j
+            if col:
+                pivote = col
+                break
+    
+    if col and matriz[fila][pivote] == 1:
+        return matriz, pivote
     # GAUSS PURO
     div = matriz[fila][pivote]
     for j in range(len(matriz[fila])):
-        matriz[fila][j] = matriz[fila][j] / div  
+        matriz[fila][j] = matriz[fila][j] / div
 
-    return matriz
+    return matriz, pivote
 
 
 def ceros(matriz, fila, pivote):
     for i in range(fila+1, len(matriz)):
         resta = matriz[i][pivote]
         for j in range(fila, len(matriz[i])):
-                matriz[i][j] -= resta
+                matriz[i][j] -= resta*matriz[fila][j]
     return matriz
 
 def conbinacion_lineal(matriz):
@@ -70,9 +90,11 @@ def conbinacion_lineal(matriz):
         for j in range(len(matriz[i])):
             if matriz[i][j] != 0:
                 c = False
+                break
         if c:
             borrar.append(i)
     
+    borrar.reverse()
     for x in borrar:
         matriz.pop(x)
 
@@ -96,9 +118,9 @@ def conbinacion_lineal(matriz):
             else:
                 if i_a not in borrar:
                     borrar.append(i_a)
-    
-    if len(borrar) > 1:
-        borrar.reverse()
+
+    borrar.sort()
+    borrar.reverse()
     for x in borrar:
         matriz.pop(x)
 
@@ -109,17 +131,10 @@ def rango(matriz):
         return len(matriz)
     
     for i in range(len(matriz[0])):
-        pivote = 0
-        for j in range(i, len(matriz[i])):
-            if matriz[i][j] != 0:
-                pivote = j
-                break
-        matriz = uno(matriz, i, pivote)
+        matriz, pivote = uno(matriz, i, i)
         matriz = ceros(matriz, i, pivote)
         matriz = conbinacion_lineal(matriz)
         if escalonada(matriz):
-            return len(matriz)
-        if len(matriz) <= len(matriz[0]):
             return len(matriz)
     return len(matriz)
 
@@ -139,10 +154,19 @@ def creador_de_matrices(num_matrices, filas, columas):
         matrices.append(matriz)
     return matrices
 
-matrices = creador_de_matrices(10, 10, 5)
+matrices = creador_de_matrices(10000, 10, 10)
 
-for matriz in matrices:
-    for x in matriz:
-        print(x)
-    print(rango(matriz))
-    print('')
+for matrizs in matrices:
+    d = len(matrizs[0])
+    #for x in matrizs:
+    #        print(x)
+    #try:
+    r = rango(matrizs)
+    #except:
+    #    print('roto')
+    #    break
+    #print('')
+    if r < d or r > d:
+        for x in matrizs:
+            print(x)
+        print(r)
