@@ -14,20 +14,17 @@ def creador_de_matrices(num_matrices, filas, columas):
         matrices.append(matriz)
     return matrices
 
-def escalonada(matriz):
+def escalonada_a2(matriz):
     # Funcion que calcula si una matriz esta escalonada es decir que el triangulo de abajo de numeros sean 0
     # Mediante una funcion recursiva que va quitando las filas y columnas comprovadas
     if len(matriz) > len(matriz[0]):
         return False
-
+    
     for i in range(len(matriz)):
-        for j in range(i, len(matriz[i])):
-            if matriz[i][j] == 1:
-                for j in range(i+1, len(matriz)):
-                    if matriz[j][i] != 0:
-                        return False
-                break
-            elif matriz[i][j] != 0:
+        for j in range(len(matriz)):
+            if i != j and matriz[i][j] != 0:
+                return False
+            elif i == j and matriz[i][j] != 1:
                 return False
     return True
 
@@ -43,57 +40,47 @@ def mover_lineas(matriz, ln1, ln2):
             matriz[i] = linea1
     return matriz
 
-def uno(matriz, fila, pivote):
+def uno(matriz, fila, inversa):
     # Primera operacion que busca que haya un 1 en alguna fila de pivote o si hay un 0 cambiarlo por otra fila
-    if matriz[fila][pivote] == 1:
-        return matriz, pivote
+    if matriz[fila][fila] == 1:
+        return matriz, inversa
     
     # MOVIENDO LINEAS
     for i in range(fila, len(matriz)):
-        if matriz[i][pivote] == 1:
+        if matriz[i][fila] == 1:
             matriz = mover_lineas(matriz, fila, i)
-            return matriz, pivote
+            inversa = mover_lineas(inversa, fila, i)
+            return matriz, inversa
     
-    if matriz[fila][pivote] == 0:
+    if matriz[fila][fila] == 0:
         for i in range(fila+1, len(matriz)):
-            if matriz[i][pivote] == 1:
+            if matriz[i][fila] == 1:
                 matriz = mover_lineas(matriz, fila, i)
-                return matriz, pivote
+                inversa = mover_lineas(inversa, fila, i)
+                return matriz, inversa
 
         for i in range(fila+1, len(matriz)):
-            if matriz[i][pivote] != 0:
+            if matriz[i][fila] != 0:
                 matriz = mover_lineas(matriz, fila, i)
-    
-    col = None
-    if matriz[fila][pivote] == 0:
-        for j in range(pivote+1, len(matriz[fila])):
-            for i in range(fila, len(matriz)):
-                if matriz[i][j] == 1:
-                    col = j
-                    matriz = mover_lineas(matriz, fila, i)
-                    break
-                elif matriz[i][j] != 0:
-                    col = j
-            if col:
-                pivote = col
-                break
-    
-    if col and matriz[fila][pivote] == 1:
-        return matriz, pivote
+                inversa = mover_lineas(inversa, fila, i)
+
     # GAUSS PURO
-    div = matriz[fila][pivote]
+    div = matriz[fila][fila]
     for j in range(len(matriz[fila])):
         matriz[fila][j] = matriz[fila][j] / div
+        inversa[fila][j] = inversa[fila][j] /div
 
-    return matriz, pivote
+    return matriz, inversa
 
 
-def ceros(matriz, fila, pivote):
-    for i in range(fila+1, len(matriz)):
-        resta = matriz[i][pivote]
-        for j in range(fila, len(matriz[i])):
-                matriz[i][j] -= resta*matriz[fila][j]
-    return matriz
+def ceros(matriz, col, inversa):
+    for i in range(len(matriz)):
+        if i != col:
+            resta = matriz[i][col]
+            for j in range(len(matriz)):
+                matriz[i][j] -= resta*matriz[col][j]
+                inversa[i][j] -= resta*inversa[col][j]
+    return matriz, inversa
 
 def conbinacion_lineal(matriz):
     # Borrar filas llenas de 0
@@ -139,30 +126,39 @@ def conbinacion_lineal(matriz):
 
     return matriz
 
-def rango(matriz):
-    if escalonada(matriz):
+def inversa(matriz):
+    if escalonada_a2(matriz):
         return len(matriz)
     
-    for i in range(len(matriz[0])):
-        matriz, pivote = uno(matriz, i, i)
-        matriz = ceros(matriz, i, pivote)
+    inversa = crear_identidad(matriz)
+
+    for i in range(len(matriz)):
+        matriz, inversa = uno(matriz, i, inversa)
+        matriz, inversa = ceros(matriz, i, inversa)
         matriz = conbinacion_lineal(matriz)
-        if escalonada(matriz):
-            return len(matriz)
-    return len(matriz)
+        if len(matriz) < len(matriz[0]):
+            return 'Esta matriz no es cuadrada'
+        if escalonada_a2(matriz):
+            return inversa
+    return inversa
 
-
-def ceros_arriba(matriz, fila, pivote):
-    pass
-
-def inversa(matriz):
+def crear_identidad(matriz):
     identidad = [[0 for y in range(len(matriz[x]))] for x in range(len(matriz))]
     for x in range(len(identidad)):
         identidad[x][x] = 1
-    
-    pass
+    return identidad 
 
 
-a = creador_de_matrices(1, 3, 3)[0]
+a = creador_de_matrices(1, 4, 4)[0]
 
-inversa(a)
+b = [
+    [2, 1, 1, 3],
+    [1, 2, 3, 1],
+    [3, 1, 2, 1],
+    [1, 3, 1, 2]
+]
+
+i = inversa(b)
+
+for x in i:
+    print(x)

@@ -154,7 +154,7 @@ def creador_de_matrices(num_matrices, filas, columas):
         matrices.append(matriz)
     return matrices
 
-matrices = creador_de_matrices(10000, 10, 10)
+matrices = creador_de_matrices(100, 10, 10)
 
 for matrizs in matrices:
     d = len(matrizs[0])
