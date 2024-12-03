@@ -43,26 +43,30 @@ def mover_lineas(matriz, ln1, ln2):
 def uno(matriz, fila, inversa):
     # Primera operacion que busca que haya un 1 en alguna fila de pivote o si hay un 0 cambiarlo por otra fila
     if matriz[fila][fila] == 1:
-        return matriz, inversa
+        return matriz, inversa, False
     
     # MOVIENDO LINEAS
     for i in range(fila, len(matriz)):
         if matriz[i][fila] == 1:
             matriz = mover_lineas(matriz, fila, i)
             inversa = mover_lineas(inversa, fila, i)
-            return matriz, inversa
+            return matriz, inversa, False
     
     if matriz[fila][fila] == 0:
         for i in range(fila+1, len(matriz)):
             if matriz[i][fila] == 1:
                 matriz = mover_lineas(matriz, fila, i)
                 inversa = mover_lineas(inversa, fila, i)
-                return matriz, inversa
+                return matriz, inversa, False
 
         for i in range(fila+1, len(matriz)):
             if matriz[i][fila] != 0:
                 matriz = mover_lineas(matriz, fila, i)
                 inversa = mover_lineas(inversa, fila, i)
+    
+    if matriz[fila][fila] == 0:
+        matriz.pop()
+        return matriz, inversa, True
 
     # GAUSS PURO
     div = matriz[fila][fila]
@@ -70,7 +74,7 @@ def uno(matriz, fila, inversa):
         matriz[fila][j] = matriz[fila][j] / div
         inversa[fila][j] = inversa[fila][j] /div
 
-    return matriz, inversa
+    return matriz, inversa, False
 
 
 def ceros(matriz, col, inversa):
@@ -133,7 +137,9 @@ def inversa(matriz):
     inversa = crear_identidad(matriz)
 
     for i in range(len(matriz)):
-        matriz, inversa = uno(matriz, i, inversa)
+        matriz, inversa, c = uno(matriz, i, inversa)
+        if c:
+            return 'columna lleva de 0'
         matriz, inversa = ceros(matriz, i, inversa)
         matriz = conbinacion_lineal(matriz)
         if len(matriz) < len(matriz[0]):
@@ -151,6 +157,7 @@ def crear_identidad(matriz):
 
 a = creador_de_matrices(1, 4, 4)[0]
 
+
 b = [
     [2, 1, 1, 3],
     [1, 2, 3, 1],
@@ -158,7 +165,7 @@ b = [
     [1, 3, 1, 2]
 ]
 
-i = inversa(b)
+i = inversa(a)
 
 for x in i:
     print(x)

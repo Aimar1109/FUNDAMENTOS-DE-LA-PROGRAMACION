@@ -46,26 +46,30 @@ def mover_lineas(matriz, ln1, ln2):
 def uno(matriz, fila, pivote, fuera):
     # Primera operacion que busca que haya un 1 en alguna fila de pivote o si hay un 0 cambiarlo por otra fila
     if matriz[fila][pivote] == 1:
-        return matriz, fuera
+        return matriz, fuera, False
     
     # MOVIENDO LINEAS
     for i in range(fila, len(matriz)):
         if matriz[i][pivote] == 1:
             matriz = mover_lineas(matriz, fila, i)
             fuera = fuera*(-1)
-            return matriz, fuera
+            return matriz, fuera, False
     
     if matriz[fila][pivote] == 0:
         for i in range(fila+1, len(matriz)):
             if matriz[i][pivote] == 1:
                 matriz = mover_lineas(matriz, fila, i)
                 fuera = fuera*(-1)
-                return matriz, fuera
+                return matriz, fuera, False
 
         for i in range(fila+1, len(matriz)):
             if matriz[i][pivote] != 0:
                 matriz = mover_lineas(matriz, fila, i)
                 fuera = fuera*(-1)
+    
+    if matriz[fila][pivote] == 0:
+        matriz.pop()
+        return matriz, fuera, True
 
     # GAUSS PURO
     div = matriz[fila][pivote]
@@ -73,7 +77,7 @@ def uno(matriz, fila, pivote, fuera):
     for j in range(len(matriz[fila])):
         matriz[fila][j] = matriz[fila][j] / div
 
-    return matriz, fuera
+    return matriz, fuera, False
 
 
 def ceros(matriz, fila, pivote):
@@ -133,13 +137,25 @@ def determinante(matriz):
         return len(matriz)
     
     for i in range(len(matriz[0])):
-        matriz, fuera = uno(matriz, i, i, fuera)
+        matriz, fuera, c = uno(matriz, i, i, fuera)
+        if c:
+            return 'columna llena de 0'
         matriz = ceros(matriz, i, i)
         matriz = conbinacion_lineal(matriz)
+        if len(matriz) < len(matriz[0]):
+            return 'no es cuadrada'
         if escalonada(matriz):
             return fuera
     return fuera
 
-a = creador_de_matrices(1, 4, 4)[0]
+matrices = creador_de_matrices(10000, 3, 3)
 
-print(determinante(a))
+#for matrix in matrices:
+#    for i in matrix:
+#        print(i)
+#    try:
+#        print(determinante(matrix))
+#    except:
+#        print('roto')
+#        break
+#    print('')
